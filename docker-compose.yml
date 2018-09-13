@@ -2,6 +2,12 @@ version: '3'
 
 services:
   sailsjs:
+    environment:
+      - MYSQL_HOST="localhost"
+      - MYSQL_DATABASE="sails_db"
+      - MYSQL_PORT="3306"
+      - MYSQL_USER="sails_user"
+      - MYSQL_PASSWORD="sailsPowdj940"
     build:
       context: .
       dockerfile: Dockerfile
