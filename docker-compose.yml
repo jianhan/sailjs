@@ -8,6 +8,9 @@ services:
       - MYSQL_PORT="3306"
       - MYSQL_USER="sails_user"
       - MYSQL_PASSWORD="sailsPowdj940"
+      - GOOGLE_MAP_API_KEY="AIzaSyDyyYUnMVp4jZkqayKx799K74OVTnS6WAk"
+      - ZOMATO_API_KEY="9af1fb4082990a117db538e4fae683f3"
+      - ZOMATO_API_URL="https://developers.zomato.com/api/v2.1"
     build:
       context: .
       dockerfile: Dockerfile
