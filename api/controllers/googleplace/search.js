@@ -3,15 +3,9 @@ module.exports = {
   description: 'Lookup near by places via google places API',
 
   inputs: {
-    query: {
-      description: 'Search query to find places',
-      type: 'string',
-      required: true
-    },
     radius: {
       description: 'Search range defined by radius in meters',
       type: 'number',
-      default: 500
     },
     lat: {
       description: 'Latitude of location to search',
@@ -45,21 +39,42 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     const googlemapClient = await sails.helpers.getGoogleMapClient();
-    googlemapClient.places({
-      query: inputs.query,
-      location: [inputs.lat, inputs.lon],
-      radius: this.req.param("radius", 1000),
-      minprice: 1,
-      maxprice: 4,
-      opennow: true,
-      type: 'restaurant'
-    })
-      .asPromise()
-      .then(function (response) {
-        sails.log(response, "************");
-      })
 
-    // Display the welcome view.
-    return exits.success("test");
+    let options = {
+      location: [inputs.lat, inputs.lon],
+      radius: _.get(inputs, 'radius', 2000),
+      type: 'restaurant'
+    }
+
+    if (_.has(inputs, 'minprice')) {
+      options['minprice'] = inputs.minprice
+    }
+
+    if (_.has(inputs, 'maxprice')) {
+      options['maxprice'] = inputs.maxprice
+    }
+
+    if (_.has(inputs, 'opennow')) {
+      options['opennow'] = inputs.opennow
+    }
+
+    googlemapClient.placesNearby(options, function (err, response) {
+      if (!err) {
+        return exits.success(response.json.results);
+      }
+      return exits.success("error");
+    });
+
+    // googlemapClient.places(options).asPromise().then(r => {
+    //   return exits.success("success");
+    // }).catch(e => {
+    //   return exits.success("err");
+    // })
+
+    // googlemapClient.places(options, function (err, response) {
+    //   return exits.success("test");
+    // })
   }
 };
+
+
