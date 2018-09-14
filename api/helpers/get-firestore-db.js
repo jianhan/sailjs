@@ -2,7 +2,6 @@ const admin = require("firebase-admin");
 const serviceAccount = require("../../firebase_admin_sdk.json");
 let firestoreDB = null
 
-// api/helpers/format-welcome-message.js
 module.exports = {
   friendlyName: 'Get firestore database',
   description: 'Returns firestore database instance',
