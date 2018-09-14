@@ -8,7 +8,7 @@ module.exports = {
   inputs: {},
 
   fn: async function (input, exits) {
-    if (firestoreDB == null) {
+    if (!firestoreDB) {
       admin.initializeApp({
         credential: admin.credential.cert(serviceAccount),
         databaseURL: "https://vuedz-f4390.firebaseio.com"
