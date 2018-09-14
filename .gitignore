@@ -131,3 +131,4 @@ lib-cov
 *.pid
 
 firebase_admin_sdk.json
+docker-compose.yml

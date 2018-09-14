@@ -24,22 +24,10 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-    var firestore = await sails.helpers.getFirestoreDb();
-    var docRef = firestore.collection('users').doc('alovelace');
-    var setAda = docRef.set({
-      first: 'Ada',
-      last: 'Lovelace',
-      born: 1815
-    });
-
-    sails.log("***********",setAda);
     if (this.req.me) {
       throw {redirect:'/welcome'};
     }
 
     return exits.success();
-
   }
-
-
 };
