@@ -12,7 +12,7 @@ const middlewares = require('./middlewares')
 
 module.exports.routes = {
 // google place search
-  'GET  /api/v1/googleplace/search': [middlewares.foobar(), {
+  'GET  /api/v1/googleplace/search': [middlewares.responseCache(12), {
     controller: 'googleplace',
     action: 'search'
   }],

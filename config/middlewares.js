@@ -1,9 +1,8 @@
 module.exports = {
-  foobar: function () {
-    console.log('Initializing `foobar` (HTTP middleware)...');
+  responseCache: function (duration) {
     return function (req, res, next) {
-      console.log('Received HTTP request: ' + req.method + ' ' + req.path);
-      return next();
+      const redisClient = sails.helpers.getRedisClient()
+      next();
     };
   }
 }

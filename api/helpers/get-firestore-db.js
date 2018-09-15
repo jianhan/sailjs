@@ -3,7 +3,7 @@ const serviceAccount = require("../../firebase_admin_sdk.json");
 let firestoreDB = null
 
 module.exports = {
-  friendlyName: 'Get firestore database',
+  friendlyName: 'Get Firestore Database',
   description: 'Returns firestore database instance',
   inputs: {},
 
