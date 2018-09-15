@@ -3,9 +3,15 @@ module.exports = {
   description: 'Lookup near by places via google places API',
 
   inputs: {
+    keyword: {
+      description: 'Keyword used for searching',
+      extendedDescription: 'A term to be matched against all available fields, including but not limited to name, type, and address, as well as customer reviews and other third-party content.',
+      type: 'string'
+    },
     radius: {
       description: 'Search range defined by radius in meters',
       type: 'number',
+      defaultsTo: 2000,
     },
     lat: {
       description: 'Latitude of location to search',
@@ -18,12 +24,16 @@ module.exports = {
       required: true
     },
     minprice: {
-      description: 'Minimal price',
+      description: 'Valid values range between 0 (most affordable) to 4 (most expensive), inclusive',
       type: 'number',
+      max: 4,
+      min: 1
     },
     maxprice: {
-      description: 'Max price',
+      description: 'Valid values range between 0 (most affordable) to 4 (most expensive), inclusive',
       type: 'number',
+      max: 4,
+      min: 1
     },
     opennow: {
       description: 'Is open now',
@@ -34,7 +44,7 @@ module.exports = {
   exits: {
     success: {
       responseType: ''
-    }
+    },
   },
 
   fn: async function (inputs, exits) {
@@ -44,6 +54,10 @@ module.exports = {
       location: [inputs.lat, inputs.lon],
       radius: _.get(inputs, 'radius', 2000),
       type: 'restaurant'
+    }
+
+    if (_.has(inputs, 'keyword')) {
+      options['keyword'] = inputs.keyword
     }
 
     if (_.has(inputs, 'minprice')) {
@@ -65,15 +79,6 @@ module.exports = {
       return exits.success("error");
     });
 
-    // googlemapClient.places(options).asPromise().then(r => {
-    //   return exits.success("success");
-    // }).catch(e => {
-    //   return exits.success("err");
-    // })
-
-    // googlemapClient.places(options, function (err, response) {
-    //   return exits.success("test");
-    // })
   }
 };
 
