@@ -7,7 +7,7 @@ module.exports = {
   sync: true,
   fn: function (input, exits) {
     if (!client) {
-      client = require('redis').createClient(6379, 'redis')
+      client = require('redis').createClient(process.env.REDIS_PORT, process.env.REDIS_HOST)
     }
 
     return exits.success(client)
