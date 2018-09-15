@@ -1,3 +1,4 @@
+// An example of a custom HTTP middleware function:
 /**
  * Route Mappings
  * (sails.config.routes)
@@ -7,10 +8,14 @@
  * For more information on configuring custom routes, check out:
  * https://sailsjs.com/anatomy/config/routes-js
  */
+const middlewares = require('./middlewares')
 
 module.exports.routes = {
 // google place search
-  'GET  /api/v1/googleplace/search': {controller: 'googleplace', action: 'search'},
+  'GET  /api/v1/googleplace/search': [middlewares.foobar(), {
+    controller: 'googleplace',
+    action: 'search'
+  }],
 
   // //  ╦ ╦╔═╗╔╗ ╔═╗╔═╗╔═╗╔═╗╔═╗
   // //  ║║║║╣ ╠╩╗╠═╝╠═╣║ ╦║╣ ╚═╗
